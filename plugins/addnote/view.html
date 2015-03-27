@@ -1,0 +1,42 @@
+<div class="header-sub">
+    <div class="back-row">
+        <a onclick="window.history.back();"><img src="img/arrowleft.png"></a>
+    </div>
+    <div id="back-arrow-title" class="media">
+        <!--<div class="img app-ico">
+            <img src="img/mod/forum.png" alt="img">
+        </div>-->
+        <div class="bd">
+            <h2><%= MM.util.formatText(user.name) %>:Notes</h2>
+        </div>
+    </div>
+</div>
+
+
+                
+<div class="content-index">
+    <div class="path-mod-forum">
+    	<% if (!notes || notes.length == 0) { %>
+                    <div class="forum-empty">
+                        <%= MM.lang.s("usernonoteyet") %>
+                    </div>
+        <% } else { %>
+        <% _.each(notes, function(note) { %>
+            <div class="forum-post first-post" data-postdiscussion="<%= discussion.discussion %>">
+                <div class="header">
+                    <img class="user-picture" src="<%= MM.util.getMoodleFilePath(discussion.userpictureurl) %>">
+                    <a class="author-name" href="#participant/<%= forum.course %>/<%= userid %>/1" rel="author"><%= user.name %></a>
+                    <a class="author-name" href="#participant/<%= forum.course %>/<%= byuserid %>/1" rel="author"><%= byuser.name %></a>
+                    <time><%= MM.util.timestampToUserDate(note.created) %></time>
+                </div>
+                <p role="heading" class="subject toogler" data-discussionid="<%= discussion.discussion %>">
+                    <%= note.content %>
+                </p>
+            </div>
+        <% }); %>
+
+        <%= MM.util.pagingBar(forum.numdiscussions, page, perpage, "#forum/view/" + forum.course + "/" + forum.cmid + "/:page", ":page") %>
+
+    	<% } %>  
+    </div>
+</div>

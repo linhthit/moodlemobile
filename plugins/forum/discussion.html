@@ -35,6 +35,11 @@
                                 <img src="img/message.png"><a href="#editpost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Edit</a>
                             </span>                    
                     <% } %>
+                    <% if(posts[posts.length-1].candelete) { %>                     
+                            <span style="border: 1px solid #eeeeee">
+                                <img src="img/message.png"><a href="#deletepost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Delete</a>
+                            </span>                    
+                    <% } %>
                 </p>
                 <p class="post-info" role="heading">
                     <span>
@@ -68,11 +73,16 @@
                                  <img src="img/message.png"><a href="#replypost/<%=post.id%>/<%=post.discussion%>/<%=courseId%>">Reply</a>
                             </span>                    
                         <% } %>
-                            <% if(post.canedit) { %>                     
-                                    <span style="border: 1px solid #eeeeee">
-                                        <img src="img/message.png"><a href="#editpost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Edit</a>
-                                    </span>                    
-                            <% } %>
+                        <% if(post.canedit) { %>                     
+                            <span style="border: 1px solid #eeeeee">
+                                <img src="img/message.png"><a href="#editpost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Edit</a>
+                            </span>                    
+                        <% } %>
+                        <% if(post.candelete) { %>                     
+                            <span style="border: 1px solid #eeeeee">
+                                <img src="img/message.png"><a href="#deletepost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Delete</a>
+                            </span>                    
+                    	<% } %>
                     </p>                	
                     <% }); %>
 					

@@ -29,6 +29,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
             ["forum/discussion/:courseId/:discussionId", "show_discussion", "showDiscussion"],
             ["replypost/:postId/:discussionId/:courseId", "createPost", "createPost"],
 			["editpost/:postId/:discussionId/:courseId", "editPost", "editPost"],
+			["deletepost/:postId/:discussionId/:courseId", "deletePost", "deletePost"],
         ],
 
         // Sync function, every 2 hours (time is in millisecs).
@@ -515,12 +516,9 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
         	            MM.popErrorMessage(error);
                     }
                 );				
-				//alert($("#replytext").val());
 
                 // Refresh the hash url for avoid navigation problems.
-				//MM.plugins.forum._syncForums();
                 MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
-				//MM.plugins.forum.showDiscussion(courseId, discussionId);
             };
             options.buttons[MM.lang.s("cancel")] = function() {
                 MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
@@ -563,6 +561,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                     function(r){
                         MM.popMessage(MM.lang.s("postedited"));
 						MM.plugins.forum.showDiscussion(courseId, discussionId);
+						//alert(MM.util.formatText(data.message));
                     },
 	                null,
     	            function (error) {
@@ -591,11 +590,74 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                 cols = 50;
             }
 			var html = '\
-            <textarea id="text" rows="'+rows+'" cols="'+cols+'">'+temp.message+'</textarea>\ ';
+            <textarea id="text" rows="'+rows+'" cols="'+cols+'"></textarea>\ ';
+			
+            MM.widgets.dialog(html, options);
+			
+			/*do
+			{
+				var old_text =temp.message;
+				temp.message=temp.message.replace('<br />','\n');	
+			}while(old_text != temp.message)*/
+			temp.message = temp.message.split('<br />').join('');
+			$("#text").val(temp.message);			
+        },
+		
+		deletePost: function(postId, discussionId, courseId) {
+            var deletepost = MM.lang.s("deletepost");
+			var userId = MM.site.get('userId');
+			
+            var options = {
+                title: deletepost,
+                width: "90%",
+                buttons: {}
+            };
+
+            options.buttons[deletepost] = function() {
+
+                var data = {
+					"postid" : postId,
+                }
+				
+                MM.widgets.dialogClose();
+                MM.moodleWSCall('local_mobile_mod_forum_delete_forum_discussion_post', data,
+                    function(r){
+                        MM.popMessage(MM.lang.s("postdeleted"));
+						MM.plugins.forum.showDiscussion(courseId, discussionId);
+                    },
+	                null,
+    	            function (error) {
+        	            MM.popErrorMessage(error);
+                    }
+                );				
+                MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
+            };
+            options.buttons[MM.lang.s("cancel")] = function() {
+                MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
+                MM.widgets.dialogClose();
+            };
+			var temp;
+			for (var el in MM.plugins.forum.postsCache) {
+                        var d = MM.plugins.forum.postsCache[el];
+                        if (d.id == postId) {
+                            temp = d;
+                            break;
+                        }
+                    }
+			
+            var rows = 5;
+            var cols = 5;
+            if (MM.deviceType == "tablet") {
+                rows = 15;
+                cols = 50;
+            }
+			var html = '\
+			<p>Are you sure you want to delete this post?</p><br/><p>'+temp.message+'</p>\ ';
 			
             MM.widgets.dialog(html, options);
 			
         },
+
 
         templates: {
             "view": {
