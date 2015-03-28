@@ -1,9 +1,4 @@
-var templates = [
-    "root/externallib/text!root/plugins/addnote/view.html",
-];
-
-
-define(templates, function (viewTpl) {
+define(function () {
     var plugin = {
         settings: {
             name: "addnote",
@@ -15,8 +10,7 @@ define(templates, function (viewTpl) {
         },
 
         routes: [
-            ["note/:courseId/:userId", "note", "addNote"],
-			["note/:userId", "note", "viewByUser"]
+            ["note/:courseId/:userId", "note", "addNote"]
         ],
 
         addNote: function(courseId, userId) {
@@ -74,67 +68,6 @@ define(templates, function (viewTpl) {
             ';
 
             MM.widgets.dialog(html, options);
-        },
-		
-		viewByUser: function(userId) {
-            var viewNote = MM.lang.s("viewnote");
-
-            var params = {
-				"$userid": userId
-			};
-			
-            MM.moodleWSCall("moodle_notes_get_note_by_user",
-                params,
-                // Success callback.
-                function(notes) { 
-                    var data = {
-                        "notes": notes.notes
-                    };
-                    var html = MM.tpl.render(MM.plugins.addnote.templates.view.html, data);
-                    
-					MM.panels.show("right", html, {keepTitle: true, showRight: true});
-
-                    // Hack in tablet view.
-                    if (MM.deviceType == "tablet") {
-                        var panelCenter = $('#panel-center');
-                        var panelRight  = $('#panel-right');
-
-                        panelCenter.css("width", MM.panels.sizes.threePanels.center);
-                        panelRight.css("left",  MM.panels.sizes.threePanels.center);
-                        panelRight.css("width", MM.panels.sizes.threePanels.right);
-                    }
-
-                    // Toggler effect.
-                    $(".forum-post .subject", "#panel-right").on(MM.clickType, function(e) {
-                        $(this).parent().find(".content").first().toggle();
-                    });
-
-                    // Bind downloads.
-                    $(".forum-download", "#panel-right").on(MM.clickType, function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        var url = $(this).data("downloadurl");
-                        var filename = $(this).data("filename");
-                        var attachmentId = $(this).data("attachmentid");
-
-                        MM.plugins.forum._downloadFile(url, filename, attachmentId);
-                    });
-                },
-                {
-                    getFromCache: false,
-                    saveToCache: false
-                },
-                function (error) {
-                    MM.popErrorMessage(error);
-                }
-			);
-		},
-		
-		templates: {
-            "view": {
-                html: viewTpl
-            }
         }
     }
 
