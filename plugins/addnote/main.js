@@ -1,4 +1,9 @@
-define(function () {
+var templates = [
+    "root/externallib/text!root/plugins/addnote/view.html",
+];
+
+
+define(templates, function (viewTpl) {
     var plugin = {
         settings: {
             name: "addnote",
@@ -74,45 +79,20 @@ define(function () {
 		viewByUser: function(userId) {
             var viewNote = MM.lang.s("viewnote");
 
-            var param = {
+            var params = {
 				"$userid": userId
 			};
-			var userId = MM.site.get('userid');
-            MM.moodleWSCall(MM.plugins.forum.wsPrefix + "mod_forum_get_forum_discussion_posts",
+			
+            MM.moodleWSCall("moodle_notes_get_note_by_user",
                 params,
                 // Success callback.
-                function(posts) {
-                    var discussion;
-
-                    // Cache for getting the discussion.
-                    for (var el in MM.plugins.forum.discussionsCache) {
-                        var d = MM.plugins.forum.discussionsCache[el];
-                        if (d.discussion == discussionId) {
-                            discussion = d;
-                            break;
-                        }
-                    }
-
-                    // Not found, search in the returned posts.
-                    if (!discussion) {
-                        for (el in posts.posts) {
-                            var post = posts.posts[el];
-                            if (post.parent == 0) {
-                                discussion = post;
-                                break;
-                            }
-                        }
-                    }
-					
-					MM.plugins.forum.postsCache = posts.posts;
-					
+                function(notes) { 
                     var data = {
-                        "discussion": discussion,
-                        "posts": posts.posts,
-                        "courseId": courseId
+                        "notes": notes.notes
                     };
-                    var html = MM.tpl.render(MM.plugins.forum.templates.discussion.html, data);
-                    MM.panels.show("right", html, {keepTitle: true, showRight: true});
+                    var html = MM.tpl.render(MM.plugins.addnote.templates.view.html, data);
+                    
+					MM.panels.show("right", html, {keepTitle: true, showRight: true});
 
                     // Hack in tablet view.
                     if (MM.deviceType == "tablet") {
@@ -143,11 +123,18 @@ define(function () {
                 },
                 {
                     getFromCache: false,
-                    saveToCache: true
+                    saveToCache: false
                 },
                 function (error) {
                     MM.popErrorMessage(error);
                 }
+			);
+		},
+		
+		templates: {
+            "view": {
+                html: viewTpl
+            }
         }
     }
 
