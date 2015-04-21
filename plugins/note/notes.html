@@ -1,0 +1,118 @@
+<div class="header-sub">
+    <div class="back-row">
+        <a onclick="window.history.back();"><img src="img/arrowleft.png"></a>
+    </div>
+    <div id="back-arrow-title" class="media">
+        <div class="img app-ico">
+            <img src="img/Notes-icon.png" alt="img">
+        </div>
+        <div class="bd">
+            <% if(filter == 'user') { %>
+            	<h2><%= MM.util.formatText(notes[0].userfullname) %>: <%=MM.lang.s("viewnote")%></h2>
+            <% } else if (filter == 'course') { %>
+            	<h2><%= MM.util.formatText(notes[0].coursefullname) %>: <%=MM.lang.s("viewnote")%></h2>
+            <% } else { %>
+            	<h2><%= MM.util.formatText('All') %>: <%=MM.lang.s("viewnote")%></h2>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="content-index">
+    <div class="path-mod-forum">
+        <% if (notes.length > 0) {%>
+			<div class="indent">
+                <div class="forum media"><h1>Site:</h1></div>
+                <% _.each(notes, function(note) { %>
+                	<% if(note.publishstate == 'site') { %>
+                        <div class="forum-post first-post">
+                            <div class="header">
+                            	<img class="user-picture" src="<%= MM.util.getMoodleFilePath(note.userpictureurl) %>">
+                                <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.userid %>" rel="author"><%= note.userfullname %></a> by <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.usermodified %>" rel="author"><%= note.usermodifiedfullname %></a>
+                                <time><%= MM.util.timestampToUserDate(note.created) %></time>
+                            </div>
+                            <p class="subject"></p>
+                            <div class="content">
+                                <%= MM.util.formatText(note.text) %>
+                            </div>
+                            <p class="post-info" role="heading">
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/edit2.png"><a href="#notes/edit/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Edit</a>
+                                    </span>                    
+                                <% } %>
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/delete2.png"><a href="#notes/delete/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Delete</a>
+                                    </span>                    
+                                <% } %>
+                            </p>                      
+                        </div>
+                    <% } %>                    
+                <% }); %>
+                <div class="forum media"><h1>Course: <%=notes[0].coursefullname%></h1></div>
+                <% _.each(notes, function(note) { %>
+                	<% if(note.publishstate == 'course') { %>
+                        <div class="forum-post first-post">
+                            <div class="header">
+                            	<img class="user-picture" src="<%= MM.util.getMoodleFilePath(note.userpictureurl) %>">
+                                <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.userid %>" rel="author"><%= note.userfullname %></a> by <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.usermodified %>" rel="author"><%= note.usermodifiedfullname %></a>
+                                <time><%= MM.util.timestampToUserDate(note.created) %></time>
+                            </div>
+                            <p class="subject"></p>
+                            <div class="content">
+                                <%= MM.util.formatText(note.text) %>
+                            </div>
+                            <p class="post-info" role="heading">
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/edit2.png"><a href="#notes/edit/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Edit</a>
+                                    </span>                    
+                                <% } %>
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/delete2.png"><a href="#notes/delete/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Delete</a>
+                                    </span>                    
+                                <% } %>
+                            </p>                      
+                        </div>
+                    <% } %>
+                <% }); %>
+                <div class="forum media"><h1>Personal:</h1></div>
+                <% _.each(notes, function(note) { %>
+                	<% if(note.publishstate == 'personal') { %>
+                        <div class="forum-post first-post">
+                            <div class="header">
+                            	<img class="user-picture" src="<%= MM.util.getMoodleFilePath(note.userpictureurl) %>">
+                                <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.userid %>" rel="author"><%= note.userfullname %></a> by <a class="author-name" href="#participant/<%= note.courseid %>/<%= note.usermodified %>" rel="author"><%= note.usermodifiedfullname %></a>
+                                <time><%= MM.util.timestampToUserDate(note.created) %></time>
+                            </div>
+                            <p class="subject"></p>
+                            <div class="content">
+                                <%= MM.util.formatText(note.text) %>
+                            </div>
+                            <p class="post-info" role="heading">
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/edit2.png"><a href="#notes/edit/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Edit</a>
+                                    </span>                    
+                                <% } %>
+                                <% if(note.canedit) { %>                     
+                                    <span style="border: 1px solid #eeeeee">
+                                        <img src="img/delete2.png"><a href="#notes/delete/<%=note.courseid%>/<%=note.userid%>/<%=note.noteid%>">Delete</a>
+                                    </span>                    
+                                <% } %>
+                            </p>                      
+                        </div>
+                    <% } %>
+                <% }); %>
+			</div>
+        <% } else { %>
+            <div class="messages">
+                <div class="no-content">
+                    <p><%= MM.lang.s("nonotesfound") %></p>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>

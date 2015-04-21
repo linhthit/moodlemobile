@@ -27,17 +27,17 @@
                 <p class="post-info" role="heading">
                     <% if(posts[posts.length-1].canreply) { %>                     
                             <span style="border: 1px solid #eeeeee">
-                                <img src="img/message.png"><a href="#replypost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Reply</a>
+                                <img src="img/reply3.png"><a href="#replypost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Reply</a>
                             </span>                    
                     <% } %>
                     <% if(posts[posts.length-1].canedit) { %>                     
                             <span style="border: 1px solid #eeeeee">
-                                <img src="img/message.png"><a href="#editpost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Edit</a>
+                                <img src="img/edit3.png"><a href="#editpost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Edit</a>
                             </span>                    
                     <% } %>
                     <% if(posts[posts.length-1].candelete) { %>                     
                             <span style="border: 1px solid #eeeeee">
-                                <img src="img/message.png"><a href="#deletepost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Delete</a>
+                                <img src="img/delete3.png"><a href="#deletepost/<%=posts[posts.length -1].id%>/				<%=posts[posts.length-1].discussion%>/<%=courseId%>">Delete</a>
                             </span>                    
                     <% } %>
                 </p>
@@ -70,17 +70,17 @@
                     <p class="post-info" role="heading">
                         <% if(post.canreply) { %>                         
                             <span style="border: 1px solid #eeeeee">
-                                 <img src="img/message.png"><a href="#replypost/<%=post.id%>/<%=post.discussion%>/<%=courseId%>">Reply</a>
+                                 <img src="img/reply3.png"><a href="#replypost/<%=post.id%>/<%=post.discussion%>/<%=courseId%>">Reply</a>
                             </span>                    
                         <% } %>
                         <% if(post.canedit) { %>                     
                             <span style="border: 1px solid #eeeeee">
-                                <img src="img/message.png"><a href="#editpost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Edit</a>
+                                <img src="img/edit3.png"><a href="#editpost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Edit</a>
                             </span>                    
                         <% } %>
                         <% if(post.candelete) { %>                     
                             <span style="border: 1px solid #eeeeee">
-                                <img src="img/message.png"><a href="#deletepost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Delete</a>
+                                <img src="img/delete3.png"><a href="#deletepost/<%=post.id%>/				<%=post.discussion%>/<%=courseId%>">Delete</a>
                             </span>                    
                     	<% } %>
                     </p>                	

@@ -498,7 +498,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                 buttons: {}
             };
 
-            options.buttons[createpost] = function() {
+            options.buttons[MM.lang.s("reply")] = function() {
 
                 var data = {
 					"postid" : postId,
@@ -549,7 +549,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                 buttons: {}
             };
 
-            options.buttons[editpost] = function() {
+            options.buttons[MM.lang.s("save")] = function() {
 
                 var data = {
 					"postid" : postId,
@@ -613,7 +613,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                 buttons: {}
             };
 
-            options.buttons[deletepost] = function() {
+            options.buttons[MM.lang.s("yes")] = function() {
 
                 var data = {
 					"postid" : postId,
@@ -632,7 +632,7 @@ define(templates, function (filesTpl, discussionTpl, discussionsTpl, attachments
                 );				
                 MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
             };
-            options.buttons[MM.lang.s("cancel")] = function() {
+            options.buttons[MM.lang.s("no")] = function() {
                 MM.Router.navigate("forum/discussion/" + courseId + "/" + discussionId);
                 MM.widgets.dialogClose();
             };
